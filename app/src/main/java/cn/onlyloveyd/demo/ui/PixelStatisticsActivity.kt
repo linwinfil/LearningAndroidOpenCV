@@ -35,7 +35,9 @@ class PixelStatisticsActivity : AppCompatActivity() {
     }
 
     private fun doStatistics() {
-        val bgr = Utils.loadResource(this, R.drawable.lena)
+        val kobe = R.drawable.kobe
+        mBinding.image.setImageResource(kobe)
+        val bgr = Utils.loadResource(this, kobe)
         val source = Mat()
         Imgproc.cvtColor(bgr, source, Imgproc.COLOR_BGR2RGB)
         message +=

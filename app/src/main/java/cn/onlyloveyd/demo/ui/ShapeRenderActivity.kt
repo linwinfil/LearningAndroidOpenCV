@@ -27,7 +27,7 @@ class ShapeRenderActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityShapeRenderBinding
     private lateinit var mSourceMat: Mat
-    private val mFillColor = Scalar(0.0, 0.0, 255.0)
+    private val mFillColor = Scalar(43.0, 12.0, 155.0)
 
     companion object {
         fun launch(context: Context) {
@@ -59,12 +59,12 @@ class ShapeRenderActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.line -> renderLine(mSourceMat.clone())
-            R.id.rectangle -> renderRectangle(mSourceMat.clone())
-            R.id.poly -> renderPoly(mSourceMat.clone())
-            R.id.circle -> renderCircle(mSourceMat.clone())
-            R.id.ellipse -> renderEllipse(mSourceMat.clone())
-            R.id.text -> renderText(mSourceMat.clone())
+            R.id.line         -> renderLine(mSourceMat.clone())
+            R.id.rectangle    -> renderRectangle(mSourceMat.clone())
+            R.id.poly         -> renderPoly(mSourceMat.clone())
+            R.id.circle       -> renderCircle(mSourceMat.clone())
+            R.id.ellipse      -> renderEllipse(mSourceMat.clone())
+            R.id.text         -> renderText(mSourceMat.clone())
             R.id.chinese_text -> renderChineseText(mSourceMat.clone())
         }
         return true
@@ -73,7 +73,7 @@ class ShapeRenderActivity : AppCompatActivity() {
     private fun renderLine(source: Mat) {
         val start = Point(0.0, source.height().toDouble())
         val end = Point(source.width().toDouble(), 0.0)
-        Imgproc.line(source, start, end, mFillColor, 10, Imgproc.FILLED, 0)
+        Imgproc.line(source, start, end, mFillColor, /*直线宽度*/10, /*边界类型*/Imgproc.FILLED, 0)
         showMat(source)
     }
 
@@ -107,15 +107,16 @@ class ShapeRenderActivity : AppCompatActivity() {
     private fun renderCircle(source: Mat) {
         val center = Point(source.width() / 2.0, source.height() / 2.0)
         val radius = 120
-        Imgproc.circle(source, center, radius, mFillColor, -1, Imgproc.LINE_AA)
+        Imgproc.circle(source, center, radius, mFillColor, -1, Imgproc.LINE_AA, 1)
         showMat(source)
     }
 
     private fun renderText(source: Mat) {
         val center = Point(source.width() / 2.0, source.height() / 2.0)
+        val text = "Hello World"//中文会乱码
         Imgproc.putText(
             source,
-            "Hello",
+            text,
             center,
             Imgproc.FONT_HERSHEY_TRIPLEX,
             2.8,
@@ -130,8 +131,7 @@ class ShapeRenderActivity : AppCompatActivity() {
         val icon = Bitmap.createBitmap(source.width(), source.height(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(source, icon)
         source.release()
-        val bitmap: Bitmap =
-            icon.copy(Bitmap.Config.ARGB_8888, true)
+        val bitmap: Bitmap = icon//icon.copy(Bitmap.Config.ARGB_8888, true)
         val canvas = Canvas(bitmap)
         val paint = Paint()
         paint.isAntiAlias = true

@@ -47,24 +47,15 @@ class MatOperationActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.bitwise_not
-            -> bitwiseNot(source)
-            R.id.bitwise_and
-            -> bitwiseAnd(source, bgr)
-            R.id.bitwise_xor
-            -> bitwiseXor(source, bgr)
-            R.id.bitwise_or
-            -> bitwiseOr(source, bgr)
-            R.id.add
-            -> add(source, bgr)
-            R.id.subtract
-            -> subtract(source, bgr)
-            R.id.multiply
-            -> multiply(source, bgr)
-            R.id.divide
-            -> divide(source, bgr)
-            R.id.addWeight
-            -> addWeight(source, bgr)
+            R.id.bitwise_not    -> bitwiseNot(source)      //按位非
+            R.id.bitwise_and    -> bitwiseAnd(source, bgr) //按位与
+            R.id.bitwise_xor    -> bitwiseXor(source, bgr) //按位异或
+            R.id.bitwise_or     -> bitwiseOr(source, bgr)  //按位或
+            R.id.add            -> add(source, bgr)        //矩阵加法
+            R.id.subtract       -> subtract(source, bgr)   //矩阵减法
+            R.id.multiply       -> multiply(source, bgr)   //矩阵乘法
+            R.id.divide         -> divide(source, bgr)     //矩阵除法
+            R.id.addWeight      -> addWeight(source, bgr)  //权重
         }
         return true
     }

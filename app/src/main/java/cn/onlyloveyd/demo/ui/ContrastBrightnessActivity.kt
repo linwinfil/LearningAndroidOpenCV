@@ -1,7 +1,9 @@
 package cn.onlyloveyd.demo.ui
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -19,6 +21,9 @@ import org.opencv.imgproc.Imgproc
  * 2020/1/29
  */
 class ContrastBrightnessActivity : AppCompatActivity() {
+    companion object {
+        private const val TAG = "ContrastBrightnessActivity"
+    }
     private lateinit var mBinding: ActivityContrastBrightnessBinding
     private lateinit var source: Mat
 
@@ -35,10 +40,11 @@ class ContrastBrightnessActivity : AppCompatActivity() {
             adjustBrightnessContrast()
         }
 
+    @SuppressLint("LongLogTag")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_contrast_brightness)
-        val bgr = Utils.loadResource(this, R.drawable.lena)
+        val bgr = Utils.loadResource(this, R.drawable.kobe)
 
         source = Mat()
         Imgproc.cvtColor(bgr, source, Imgproc.COLOR_BGR2RGB)
@@ -46,6 +52,7 @@ class ContrastBrightnessActivity : AppCompatActivity() {
         Utils.matToBitmap(source, bitmap)
         mBinding.ivSource.setImageBitmap(bitmap)
         originBrightness = Core.mean(source).`val`[0]
+        Log.i(TAG, "originBrightness:${originBrightness}")
         mBinding.sbBrightness.progress = originBrightness.toInt()
         mBinding.sbBrightness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -73,28 +80,36 @@ class ContrastBrightnessActivity : AppCompatActivity() {
         })
     }
 
+    //调整图像亮度和对比度属于像素变换-点操作
+    //g(i,j) = αf(i,j) +β （其中 α>0 ，α 增益（放大倍数），用来控制图像的对比度，β （偏置），用控制图像的亮度。
+    //操作方式：
+    //像素值加法、像素值乘法
+    @SuppressLint("LongLogTag")
     private fun adjustBrightnessContrast() {
         val pre = Mat()
+        val newBrightness = brightness - originBrightness
         Core.add(
             source,
             Scalar(
-                brightness - originBrightness,
-                brightness - originBrightness,
-                brightness - originBrightness
+                newBrightness,
+                newBrightness,
+                newBrightness
             ),
             pre
         )
         val dst = Mat()
+        val newContrast = contrast / 100
         Core.multiply(
             pre,
             Scalar(
-                contrast / 100,
-                contrast / 100,
-                contrast / 100,
-                contrast / 100
+                newContrast,
+                newContrast,
+                newContrast,
+                newContrast
             ),
             dst
         )
+        Log.i(TAG, "newContrast:$newContrast, newBrightness:$newBrightness")
         val bitmap = Bitmap.createBitmap(dst.cols(), dst.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(dst, bitmap)
         mBinding.ivSource.setImageBitmap(bitmap)

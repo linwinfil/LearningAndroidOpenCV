@@ -43,18 +43,22 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MatOperationActivity"
+            android:label="Mat操作"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.PixelStatisticsActivity"
+            android:label="图像像素值统计"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ShapeRenderActivity"
+            android:label="绘制几何图形"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ContrastBrightnessActivity"
+            android:label="调整对比度和亮度"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
