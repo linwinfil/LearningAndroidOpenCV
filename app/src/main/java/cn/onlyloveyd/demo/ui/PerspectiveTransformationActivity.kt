@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import cn.onlyloveyd.demo.R
 import cn.onlyloveyd.demo.databinding.ActivityPerspectiveTransformationBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.opencv.android.Utils
 import org.opencv.core.Mat
 import org.opencv.core.Point

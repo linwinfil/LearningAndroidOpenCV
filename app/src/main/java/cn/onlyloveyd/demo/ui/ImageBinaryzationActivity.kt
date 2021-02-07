@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import cn.onlyloveyd.demo.R
@@ -16,11 +17,21 @@ import org.opencv.imgproc.Imgproc
  * 图像二值化
  * author: yidong
  * 2020/2/12
+ * 图像二值化（ Image Binarization）就是将图像上的像素点的灰度值设置为0或255，也就是将整个图像呈现出明显的黑白效果的过程。
+ * 在数字图像处理中，二值图像占有非常重要的地位，图像的二值化使图像中数据量大为减少，从而能凸显出目标的轮廓。
  */
 class ImageBinaryzationActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityImageBinaryzationBinding
     private lateinit var mGray: Mat
+    private var mType = -1;
+    private var mBinarizationValue: Double = 127.toDouble()
+        set(value) {
+            field = value
+            if (this.mType != -1) {
+                threshold(mType)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +42,19 @@ class ImageBinaryzationActivity : AppCompatActivity() {
         showMat(mGray)
         title = "Gray"
         bgr.release()
+
+        mBinding.seekBar.progress = (mBinarizationValue / 255f * 100f).toInt()
+        mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                mBinarizationValue = (progress / 100f * 255f).toDouble()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -63,8 +87,13 @@ class ImageBinaryzationActivity : AppCompatActivity() {
     }
 
     private fun threshold(type: Int) {
+        mType = type
         val ret = Mat()
-        Imgproc.threshold(mGray, ret, 127.toDouble(), 255.toDouble(), type)
+        Imgproc.threshold(mGray,    //待二值化的多通道图像，只能是CV_8U和CV_32F两种数据类型
+                ret,                //二值化后的图像，与输入图像具有相同的尺寸、类型和通道数
+                mBinarizationValue, //二值化的阈值
+                255.toDouble(),     //二值化过程的最大值，此函数只在THRESH_BINARY和THRESH_BINARY_INV两种二值化方法中才使用
+                type)               //二值化类型
         showMat(ret)
         title = getTypeName(type)
     }

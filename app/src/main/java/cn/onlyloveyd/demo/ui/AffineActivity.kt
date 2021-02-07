@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import cn.onlyloveyd.demo.R
@@ -24,6 +25,9 @@ class AffineActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityAffineBinding
     private lateinit var mRgb: Mat
+    private var mMenuId = -1
+    private var mDegree: Double = 120.0
+    private var mScale:Double = 1.2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,34 @@ class AffineActivity : AppCompatActivity() {
         Imgproc.cvtColor(bgr, mRgb, Imgproc.COLOR_BGR2RGB)
         bgr.release()
         showMat(mBinding.ivLena, mRgb)
+
+
+        mBinding.seekBarOne.progress = (mDegree / 360f * 100f).toInt()
+        mBinding.seekBarOne.setOnSeekBarChangeListener(seekBarListener)
+        mBinding.seekBarTwo.setOnSeekBarChangeListener(seekBarListener)
+    }
+
+    private var seekBarListener = object:SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            if (mMenuId == -1) return
+            when (seekBar) {
+                this@AffineActivity.mBinding.seekBarOne -> {
+                    mDegree = (progress / 100f * 360f).toDouble()
+                    rotateMatrix(mDegree, mScale)
+                }
+                this@AffineActivity.mBinding.seekBarTwo -> {
+                }
+            }
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+        }
+
     }
 
 
@@ -83,8 +115,9 @@ class AffineActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         title = item.title
+        mMenuId = item.itemId
         when (item.itemId) {
-            R.id.affine_rotate_scale -> rotateMatrix(120.0, 1.2)
+            R.id.affine_rotate_scale -> rotateMatrix(mDegree, mScale)
             R.id.affine_three_points -> threePointsMatrix()
         }
         return true

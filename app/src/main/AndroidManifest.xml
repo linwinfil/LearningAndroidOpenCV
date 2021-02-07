@@ -63,30 +63,37 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ColorTransferActivity"
+            android:label="颜色模型装换"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ChannelSplitMergeActivity"
+            android:label="通道分离合并"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ImageBinaryzationActivity"
+            android:label="图像二值化"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LutActivity"
+            android:label="LUT查找表"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.PerspectiveTransformationActivity"
+            android:label="透视变换"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.AffineActivity"
+            android:label="仿射变换"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.PolarActivity"
+            android:label="极坐标变换"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
