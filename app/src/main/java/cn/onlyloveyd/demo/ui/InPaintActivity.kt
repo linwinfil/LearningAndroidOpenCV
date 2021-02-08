@@ -13,6 +13,7 @@ import org.opencv.photo.Photo
 
 /**
  * 图像修复
+ * <a href="https://mp.weixin.qq.com/s/npomqlMbZj83LjY3nEwMcg"/>
  * author: yidong
  * 2020/11/28
  */

@@ -98,10 +98,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.GLPyramidActivity"
+            android:label="图像金字塔"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.HistActivity"
+            android:label="图像直方图"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -202,6 +204,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.QRDetectActivity"
+            android:label="QR二维码检测"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -222,10 +225,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.InPaintActivity"
+            android:label="图像修复"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.NonPhotoRealisticRenderingActivity"
+            android:label="非真实渲染"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

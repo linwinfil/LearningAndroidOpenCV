@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -50,7 +52,7 @@ class QRDetectActivity : AppCompatActivity() {
 
 
     // 请求相机权限
-    private val requestCameraPermission =
+    private val requestCameraPermission: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it) {
                 mPhotoSavePath =
@@ -63,7 +65,7 @@ class QRDetectActivity : AppCompatActivity() {
         }
 
     // 请求外部存储权限
-    private val requestStoragePermission =
+    private val requestStoragePermission: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it) {
                 pickImage.launch("image/*")
@@ -89,7 +91,7 @@ class QRDetectActivity : AppCompatActivity() {
         }
     }
 
-    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
+    private val pickImage: ActivityResultLauncher<String> = registerForActivityResult(ActivityResultContracts.GetContent()) {
         if (it != null) {
             val filePath = MediaStoreUtils.getMediaPath(this, it)
             if (filePath.isNullOrEmpty()) {

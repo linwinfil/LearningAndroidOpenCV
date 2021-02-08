@@ -24,7 +24,7 @@ class CardFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = FragmentCardBinding.inflate(inflater, container, false)
         if (arguments != null) {
             val bitmap = arguments?.getParcelable<Bitmap>(Card.ARG_BITMAP)

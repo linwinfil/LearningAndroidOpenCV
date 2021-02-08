@@ -30,7 +30,7 @@ class GLPyramidActivity : CardGalleryActivity() {
         gaussList.add(source)
         for (i in 0..2) {
             val gauss = Mat()
-            Imgproc.pyrDown(gaussList[i], gauss)
+            Imgproc.pyrDown(gaussList[i], gauss)//下采样
             gaussList.add(gauss)
         }
 

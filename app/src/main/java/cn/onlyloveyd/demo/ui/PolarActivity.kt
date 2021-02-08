@@ -69,7 +69,7 @@ class PolarActivity : AppCompatActivity() {
             size,
             center,
             center.x,
-            Imgproc.INTER_LINEAR + Imgproc.WARP_POLAR_LINEAR
+            Imgproc.INTER_LINEAR + Imgproc.WARP_POLAR_LINEAR//极坐标变换
         )
         showMat(mBinding.ivResult, mPolar)
     }
@@ -84,7 +84,7 @@ class PolarActivity : AppCompatActivity() {
             size,
             center,
             center.x,
-            Imgproc.INTER_LINEAR + Imgproc.WARP_INVERSE_MAP
+            Imgproc.INTER_LINEAR + Imgproc.WARP_INVERSE_MAP//逆变换
         )
         showMat(mBinding.ivResult, dst)
     }
